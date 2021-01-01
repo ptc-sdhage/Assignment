@@ -42,6 +42,11 @@ form, .content {
   border-radius: 5px;
   border: 1px solid gray;
 }
+.center {
+  padding: 70px 0;
+  border: 3px solid green;
+  text-align: center;
+}
 .btn {
   padding: 10px;
   font-size: 15px;

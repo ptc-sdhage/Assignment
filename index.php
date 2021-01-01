@@ -51,8 +51,10 @@ if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
       
       if($row['userType'] == "approval taker"){
+         
           header('location: approvalTaker.php'); 
       }else  if($row['userType'] == "approver") {
+          
           header('location: approver.php'); 
       }
   }
