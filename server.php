@@ -61,6 +61,7 @@ if (isset($_POST['reg_user'])) {
   	header('location: index.php');
   }
   
+  
 }
 // ... 
 
