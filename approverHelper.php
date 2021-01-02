@@ -1,8 +1,24 @@
+
+<?php 
+include('server.php');
+
+  if (!isset($_SESSION['username'])) {
+  	$_SESSION['msg'] = "You must log in first";
+  	header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['username']);
+  	header("location: login.php");
+  }
+?>
+
+
 <?php
 
 //include('accept.php');
 //include('reject.php');
-session_start(); 
+
 $at_id ='';
 $email ='';
 $OsLink ='';
@@ -58,15 +74,10 @@ if ($result->num_rows > 0) {
     } else {
         echo "0 results";
     }
-    
-    
-    
-    
-    
-    
+       
     
 } else {
-    header('location: request.php');
+    //header('location: request.php');
    
 }
 

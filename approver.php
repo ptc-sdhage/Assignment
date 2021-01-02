@@ -1,3 +1,5 @@
+
+
 <?php include('approverHelper.php') ?>
 
 
@@ -8,6 +10,19 @@
 <title>Approver</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css">
+<style>
+.btnlogout {
+  padding: 10px;
+  
+  font-size: 15px;
+  color: white;
+  background: #FF0000;
+  border: none;
+  border-radius: 5px;
+}
+</style>
+
+
 </head>
 <body>
 <div class="header">
@@ -27,7 +42,9 @@
 
 </div>
 
-
+		<div class="input-group">
+			<button type="submit" class="btnlogout" name="logout" ><a href="logout.php">Logout</a></button>
+		</div>
 
 
 </form>

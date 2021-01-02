@@ -1,4 +1,15 @@
 <?php 
+include('server.php');
+
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login.php');
+}
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: login.php");
+}
 echo "Os approval is confirmed";
 include('approverHelper.php');
 
@@ -27,15 +38,6 @@ if ($result->num_rows > 0) {
 
 //if (isset($_POST['approve'])) {
 
-            echo "</br>";
-            $sql = "UPDATE approver SET Response='Accepted' where ApproverEmail ='$email'";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "UPDATE successful";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-            mysqli_query($conn, $sql);
             $at_id ="";
             $ApproverEmailIds="";
             $sql = "SELECT At_id FROM approver where ApproverEmail ='$email'";
@@ -69,10 +71,8 @@ if ($result->num_rows > 0) {
                     $body = "Request pending for Os link approval for the link : $link";
                     $str_arr = preg_split("/\,/", $ApproverEmailIds);
                     $arrlength = count($str_arr);
-                    $x = 1;
+                    $x = 1;  // First Email id has already sent the email
                     echo $arrlength;
-                    echo $str_arr[0];
-                    echo $str_arr[1];
                     while ($x < $arrlength) {
                         if (mail($str_arr[$x], $subject, $body)) {
                             echo "Email successfully sent to $str_arr[$x]...";
@@ -82,9 +82,7 @@ if ($result->num_rows > 0) {
                         $x++;
                     }
                     
-                    
-                    
-                    
+    
                     
                 } else {
                     echo "0 results";
@@ -94,7 +92,16 @@ if ($result->num_rows > 0) {
                 echo "0 results";
             }
             
-           
+            $response = "Your request for open-source library $link  is approved";
+            echo "</br>";
+            $sql = "UPDATE approver SET Response='$response' where ApproverEmail ='$email'";
+            
+            if ($conn->query($sql) === TRUE) {
+                echo "UPDATE successful";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            mysqli_query($conn, $sql);
             
             
 //}

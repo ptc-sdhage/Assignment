@@ -11,7 +11,7 @@ body {
   width: 30%;
   margin: 50px auto 0px;
   color: white;
-  background: #5F9EA0;
+  background: #00008B;
   text-align: center;
   border: 1px solid #B0C4DE;
   border-bottom: none;
@@ -55,6 +55,7 @@ form, .content {
   border: none;
   border-radius: 5px;
 }
+
 .error {
   width: 92%; 
   margin: 0px auto; 

@@ -45,9 +45,12 @@
 		<div class="input-group">
 			<button type="submit" class="btn" name="reg_user">Register</button>
 		</div>
-		<p>
-			Already a member? <a href="login.php">Sign in</a>
-		</p>
+		
+		<div style="overflow: hidden;">
+    <p style="float: left;">Already a member?</p>
+    <p style="float: Left;color: blue;"><a href="login.php">Sign in</p>
+</div>
+		
 	</form>
 </body>
 </html>

@@ -23,9 +23,11 @@
   	<div class="input-group">
   		<button type="submit" class="btn" name="login_user">Login</button>
   	</div>
-  	<p>
-  		Not yet a member? <a href="register.php">Sign up</a>
-  	</p>
+
+  		<div style="overflow: hidden;">
+    <p style="float: left;">Not yet a member?</p>
+    <p style="float: Left;color: blue;"><a href="register.php">Sign up</p>
+</div>
   </form>
 
 </body>
