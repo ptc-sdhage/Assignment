@@ -51,9 +51,10 @@ form, .content {
   padding: 10px;
   font-size: 15px;
   color: white;
-  background: #5F9EA0;
+  background: #00008B;
   border: none;
   border-radius: 5px;
+  display:inline-block;
 }
 
 .error {
@@ -75,7 +76,7 @@ form, .content {
 
 body {
 	margin: 0;
-	color: #6a6f8c;
+	color: #00008B;
 	background: #c8c8c8;
 	font: 600 16px/18px 'Open Sans', sans-serif;
 	background-color: #FFF5EE;

@@ -2,13 +2,13 @@
   session_start(); 
 
   if (!isset($_SESSION['username'])) {
-  	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
+      $_SESSION['msg'] = "You must log in first";
+      header('location: login.php');
   }
   if (isset($_GET['logout'])) {
-  	session_destroy();
-  	unset($_SESSION['username']);
-  	header("location: login.php");
+      session_destroy();
+      unset($_SESSION['username']);
+      header("location: login.php");
   }
 ?>
 <!DOCTYPE html>
@@ -45,17 +45,17 @@ if ($conn->connect_error) {
 
 $sql = "SELECT userType FROM users where username = '{$_SESSION['username']}'";
 $result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
+echo $_SESSION['username'];
+if ($result && $result ->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-      
-      if($row['userType'] == "approval taker"){
-         
+      echo $row['userType'];
+    if($row['userType'] == "approval taker"){
           header('location: approvalTaker.php'); 
+          
       }else  if($row['userType'] == "approver") {
           
-          header('location: approver.php'); 
+          header("location: approver.php"); 
       }
   }
 } else {

@@ -1,16 +1,8 @@
 <?php 
 include('server.php');
+session_start();
 
-if (!isset($_SESSION['username'])) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['username']);
-    header("location: login.php");
-}
-echo "Os approval is confirmed";
+echo "Os link is accepted";
 include('approverHelper.php');
 
 $email='';
@@ -22,49 +14,34 @@ $link='';
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        
-        //$at_id =$row['At_id'];
         $email = $row['email'];
-        // $link = $row['OsLink'];
-        //   $ApproverEmailIds = $row['ApproverEmailIds'];
     }
 } else {
     echo "0 results";
 }
 
 
-
-
-
-//if (isset($_POST['approve'])) {
-
             $at_id ="";
             $ApproverEmailIds="";
             $sql = "SELECT At_id FROM approver where ApproverEmail ='$email'";
             $result = $conn->query($sql);
             
-            if ($result->num_rows > 0) {
+            if ($result && $result ->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                    
-                    //$at_id =$row['At_id'];
                     $at_id = $row['At_id'];
-                    // $link = $row['OsLink'];
-                    //   $ApproverEmailIds = $row['ApproverEmailIds'];
                 }
                
                 
                 $sql1 = "SELECT ApproverEmailIds,OsLink FROM approvaltaker where At_id ='$at_id'";
                 $result1 = $conn->query($sql1);
                 
-                if ($result1->num_rows > 0) {
+                if ($result1 && $result1 ->num_rows > 0) {
                     // output data of each row
                     while($row = $result1->fetch_assoc()) {
                         
-                        //$at_id =$row['At_id'];
                         $ApproverEmailIds = $row['ApproverEmailIds'];
                         $link = $row['OsLink'];
-                        //   $ApproverEmailIds = $row['ApproverEmailIds'];
                     }
                    // echo $ApproverEmailIds;
                     $subject = "Request for OS link approval";
@@ -72,18 +49,15 @@ if ($result->num_rows > 0) {
                     $str_arr = preg_split("/\,/", $ApproverEmailIds);
                     $arrlength = count($str_arr);
                     $x = 1;  // First Email id has already sent the email
-                    echo $arrlength;
                     while ($x < $arrlength) {
                         if (mail($str_arr[$x], $subject, $body)) {
-                            echo "Email successfully sent to $str_arr[$x]...";
+                           // echo "Email successfully sent to $str_arr[$x]...";
                         } else {
-                            echo "Email sending failed...";
+                           echo "Email sending failed...";
                         }
                         $x++;
                     }
-                    
-    
-                    
+                       
                 } else {
                     echo "0 results";
                 }
@@ -97,7 +71,7 @@ if ($result->num_rows > 0) {
             $sql = "UPDATE approver SET Response='$response' where ApproverEmail ='$email'";
             
             if ($conn->query($sql) === TRUE) {
-                echo "UPDATE successful";
+               // echo "UPDATE successful";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

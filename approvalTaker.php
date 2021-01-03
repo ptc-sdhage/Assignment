@@ -12,12 +12,9 @@
 <head>
 <style>
 form, .content {
-  width: 30%;
   margin: 80px auto;
-  padding: 20px;
-  border: 1px solid #B0C4DE;
-  background: white;
-  border-radius: 0px 0px 10px 10px;
+  background: #FFF5EE;
+  width: 80%;
 }
 
 .btnlogout {
@@ -40,13 +37,13 @@ form, .content {
  
  
 			<div class="input-group">
-				<label>OS library link</label> <input type="text" name="link"
+				<label>OS library link</label> <input type="text" name="link" id="link"
 					value="<?php echo $link; ?>" />
 			</div>
 		</div>
 		<div class="input-group">
 			<div class="address">
-				<label for="address">Email Ids of the approvers<h5 style="color:red;">(Please provide comma(,)separated list of Emails)</h5></label> <input
+				<label for="address">Email Ids of the approvers<h5 style="color:#483D8B;">(Please provide comma(,)separated list of Emails)</h5></label> <input
 					type="text" name="address" id="address"
 					value="<?php echo $address; ?>">
 			</div>
@@ -61,11 +58,9 @@ form, .content {
 				approval</button>
 		</div>
 		<div class="input-group">
-			<button type="submit" class="btnlogout" name="logout" ><a href="logout.php">Logout</a></button>
+			<button type="submit" class="btnlogout" name="logout" ><a href="login.php?logout='1'">Logout</a></button>
 		</div>
-  	
 </form>
-
 
 </body>
 </head>

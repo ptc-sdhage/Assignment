@@ -1,4 +1,11 @@
-<?php include('server.php') ?>
+<?php
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: login.php");
+}
+
+include('server.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
