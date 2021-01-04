@@ -1,4 +1,13 @@
 <?php include('server.php');
+
+if(isset($_GET['diff'])){
+    
+
+if($_GET['diff'])
+{
+    echo "<script>alert('Already applied to same OS link with different approver Email Ids');</script>"; 
+}
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,11 +20,7 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <head>
 <style>
-form, .content {
-  margin: 80px auto;
-  background: #FFF5EE;
-  width: 80%;
-}
+
 
 .btnlogout {
   padding: 10px;
@@ -30,6 +35,9 @@ form, .content {
 
 </head>
 <body>
+<div class="header">
+  	<h2>OS Library approval System </h2>
+  </div>
 	<form method="post">
 
 <?php include('errors.php'); ?>

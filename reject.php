@@ -1,3 +1,22 @@
+<html>
+<head>
+<title>
+
+Accepted
+</title>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+
+
+</style>
+</head>
+<body>
+  <div class="header">
+  	<h2>OS Library approval System </h2>
+  </div>
+	<form method="post">
+
 <?php
 include('server.php');
 
@@ -10,8 +29,8 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['username']);
     header("location: login.php");
 }
-
-echo "Os approval is Rejected";
+?><h2 style= color:green;><span class="blink"> Os approval is Rejected </span></h2>
+<?php 
 include('approverHelper.php');
 
 $email='';
@@ -50,7 +69,7 @@ if ($result && $result ->num_rows > 0) {
              $link = $row['OsLink'];
         }
         
-        print $ApproverEmailIds;
+        
     } else {
         echo "0 results";
     }
@@ -59,17 +78,27 @@ if ($result && $result ->num_rows > 0) {
     echo "0 results";
 }
 
-$response = "Your request for open-source library $link  is rejected";
+$response = "Your request for open-source library \"$link\" is rejected";
 $sql = "UPDATE approver SET Response='$response' where ApproverEmail ='$email'";
 
 if ($conn->query($sql) === TRUE) {
-    echo "UPDATE successful";
+    
+    $sql = "DELETE FROM approver WHERE At_id ='$at_id' and Response IS NULL";
+    
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted successfully with at_id = . $at_id";
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+    
+    
+    //echo "UPDATE successful";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 mysqli_query($conn, $sql);
 
 
-//}
-
-?>
+?></form>
+</body>
+      </html>

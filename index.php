@@ -22,18 +22,6 @@
 <div class="header">
 	<h2>OS library management system</h2>
 </div>
-<div class="content">
-  	<!-- notification message -->
-  	<?php if (isset($_SESSION['success'])) : ?>
-      <div class="error success" >
-      	<h3>
-          <?php 
-          	echo $_SESSION['success']; 
-          	unset($_SESSION['success']);
-          ?>
-      	</h3>
-      </div>
-  	<?php endif ?>
 
 <?php
 // Create connection
@@ -45,11 +33,9 @@ if ($conn->connect_error) {
 
 $sql = "SELECT userType FROM users where username = '{$_SESSION['username']}'";
 $result = $conn->query($sql);
-echo $_SESSION['username'];
 if ($result && $result ->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-      echo $row['userType'];
     if($row['userType'] == "approval taker"){
           header('location: approvalTaker.php'); 
           

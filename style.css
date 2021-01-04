@@ -9,20 +9,29 @@ body {
 
 .header {
   width: 30%;
-  margin: 50px auto 0px;
+  margin: 70px auto 0px;
   color: white;
-  background: #00008B;
+  background: #2E8B57;
   text-align: center;
   border: 1px solid #B0C4DE;
   border-bottom: none;
   border-radius: 10px 10px 0px 0px;
   padding: 20px;
 }
+
+.formPosition{
+	position:absolute;
+	left:550px; 
+	top:50px; 
+	width: 90%;
+	height :400px
+}
+
 form, .content {
   width: 30%;
   margin: 0px auto;
   padding: 20px;
-  border: 1px solid #B0C4DE;
+  border: 4px solid #B0C4DE;
   background: white;
   border-radius: 0px 0px 10px 10px;
 }
@@ -33,6 +42,16 @@ form, .content {
   display: block;
   text-align: left;
   margin: 3px;
+}
+.btnlogout {
+  padding: 10px;
+  
+  font-size: 15px;
+  color: white;
+  background: #FF0000;
+  border: none;
+  border-radius: 5px;
+
 }
 .input-group input {
   height: 30px;
@@ -51,10 +70,21 @@ form, .content {
   padding: 10px;
   font-size: 15px;
   color: white;
-  background: #00008B;
+  background: #2E8B57;
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  width: 200px;
+}
+.reject{
+  padding: 10px;
+  font-size: 15px;
+  color: white;
+  background: #FF0000;
   border: none;
   border-radius: 5px;
   display:inline-block;
+  width: 200px;
 }
 
 .error {
@@ -76,7 +106,7 @@ form, .content {
 
 body {
 	margin: 0;
-	color: #00008B;
+	color: #2E8B57;
 	background: #c8c8c8;
 	font: 600 16px/18px 'Open Sans', sans-serif;
 	background-color: #FFF5EE;
@@ -126,6 +156,29 @@ position: fixed;
 	position: absolute;
 	padding: 90px 70px 50px 70px;
 	background: rgba(40, 57, 101, .9);
+}
+*{
+font-family:'Arial';
+}
+.blink{
+-webkit-animation:blink 2s linear infinite;
+-moz-animation:blink 2s linear infinite;
+animation:blink 2s linear infinite;
+}
+@-webkit-keyframes blink{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
+}
+@-moz-keyframes blink{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
+}
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
 }
 
 .login-html .sign-in-htm, .login-html .sign-up-htm {

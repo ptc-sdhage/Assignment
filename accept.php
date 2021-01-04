@@ -1,8 +1,29 @@
 <?php 
 include('server.php');
-session_start();
+//session_start();
 
-echo "Os link is accepted";
+
+?>
+<html>
+<head>
+<title>
+
+Accepted
+</title>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+ <div class="header">
+  	<h2>OS Library approval System </h2>
+  </div>
+	<form method="post">
+
+
+    <h3 style= color:green;><span class="blink"> Os link is approved </span></h3>
+ <?php 
 include('approverHelper.php');
 
 $email='';
@@ -66,7 +87,7 @@ if ($result->num_rows > 0) {
                 echo "0 results";
             }
             
-            $response = "Your request for open-source library $link  is approved";
+            $response = "Your request for open-source library \"$link\" is approved";
             echo "</br>";
             $sql = "UPDATE approver SET Response='$response' where ApproverEmail ='$email'";
             
@@ -79,5 +100,7 @@ if ($result->num_rows > 0) {
             
             
 //}
-  
-?>
+      
+?></form>
+</body>
+      </html>

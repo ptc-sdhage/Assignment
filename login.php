@@ -11,10 +11,14 @@ include('server.php') ?>
 <head>
   <title>OS library management system</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  
+  
 </head>
 <body>
+<img style="float: left; margin: 0px 100px 100px 0px; height:750px; width: 60%;" src="ptc.jpg" width="100" />
+<div class="formPosition">
   <div class="header">
-  	<h2>Login</h2>
+  	<h2>OS Library approval System </br></br>Login</h2>
   </div>
 
   <form method="post" action="login.php">
@@ -36,6 +40,6 @@ include('server.php') ?>
     <p style="float: Left;color: blue;"><a href="register.php">Sign up</p>
 </div>
   </form>
-
+</div>
 </body>
 </html>
