@@ -1,4 +1,12 @@
-
+<?php 
+session_start();
+$errors = array();
+include('errors.php'); include('approverHelper.php');
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,34 +15,27 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
 
-
-
 .div1 {
   width: 80%;
   height: 100px;
-  border: 1px solid blue;
+
 }
-
-
-
 </style>
 
 
 </head>
 <body>
-
-    <div class="header">
+<div class="header">
   	<h2>OS Library approval System </h2>
   </div>
-   <form method="post"> 
-	
-<?php
-$errors = array();
-include('errors.php'); include('approverHelper.php');?>
+</div>
+	<form method="post">
+
 <p id="link"></p>
 <div class="input-group">
 <h3> <?php 
 $conn = mysqli_connect('localhost', 'root', '', 'assignmentdb');
+//$username = $_GET['userName'];
 $sql = "SELECT email FROM users where username = '{$_SESSION['username']}'";
 $result = $conn->query($sql);
 
@@ -60,11 +61,8 @@ if ($result && $result->num_rows > 0) {
     }
     
     if(empty($response)){
-    ?>
-    
-
-    </h3><h3 <h2 style= color:Black;>The following OS link needs to be approved for the user <u><?php echo $ApprovalTakerName?></u> :</h3></br><div class="div1"></br></br><?php 
-    echo "<h3 style= color:blue;> $OsLink </div>";
+    ?></h3><h3 <h2 style= color:Black;>The following OS link needs to be approved for the user <u><?php echo $ApprovalTakerName?></u> :</h3></br><div class="div1"></br></br><?php 
+    echo "<h3 style= color:blue;><a href= $OsLink > $OsLink </a></div>";
     ?>
     </br>
     <button id="approve" class="btn"   name="approve"><a href="accept.php">Approve</a></button>
@@ -78,7 +76,7 @@ if ($result && $result->num_rows > 0) {
    <?php  
     }
     else {?>
-        <h2 style= color:green;><span class="blink">You have already responded to the link  </h2><?php echo "<h3 style= color:blue;>  </br>$OsLink"?> </span></h3></div></br>
+        <h2 style= color:green;><span class="blink">You have already responded to the link  </h2><?php echo "<h3 style= color:blue;>  </br><a href= $OsLink >$OsLink</a>"?> </span></h3></div></br>
   
 
   <?php   }
@@ -87,8 +85,8 @@ if ($result && $result->num_rows > 0) {
     ?><h2 style= color:green;>No pending requests</h2><?php 
 }
 ?></h3>
-   <div class="input-group">
-			<button type="submit" class="btnlogout" name="logout" ><a href="login.php?logout='1'">Logout</a></button>
+  <div class="input-group">
+			<button type="button" class="btnlogout" name="logout" ><a href="logout.php">Logout</a></button>
 		</div>
 </form>
 </body>

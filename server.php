@@ -26,6 +26,10 @@ if (isset($_POST['reg_user'])) {
     if (empty($username)) {
         array_push($errors, "Username is required");
     }
+   
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$username)) {
+        array_push($errors, "Only letters and white space allowed in username");
+    }
     if (empty($email)) {
         array_push($errors, "Email is required");
     }
@@ -85,7 +89,7 @@ if (isset($_POST['login_user'])) {
         $results = mysqli_query($db, $query);
         if (mysqli_num_rows($results) == 1) {
             $_SESSION['username'] = $username;
-
+            
             header('location: index.php');
         } else {
             array_push($errors, "Wrong username/password combination");
@@ -114,11 +118,16 @@ if (isset($_POST['take_approval'])) {
         array_push($errors, "One or more Email Ids of approvers are required");
     }
 
-    $query = "SELECT * FROM approvaltaker WHERE OsLink='$link'";
+    $query = "SELECT * FROM approvaltaker WHERE OsLink='$link' AND ApprovalTakerName='{$_SESSION['username']}'";
     $result = $conn->query($query);
 
     if ($result && $result->num_rows > 0 && (count($errors) == 0)) {
-        header("Location:approvalTakerResponseForAlready.php? takerResponse=$link");
+        while ($row = $result->fetch_assoc()) {
+            
+            $at_id = $row['At_id'];
+            header("Location:approvalTakerResponseForAlready.php?takerResponse=$link&at_id=$at_id");
+        }
+        
     } else if(count($errors) == 0) {
 
         $query = "INSERT INTO approvaltaker (ApprovalTakerName, OsLink, ApproverEmailIds, Date) VALUES ('{$_SESSION['username']}', '$link', '$address', CURRENT_TIMESTAMP)";

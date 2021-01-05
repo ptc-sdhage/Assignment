@@ -4,6 +4,7 @@
 <head>
 <title>Registration system PHP and MySQL</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
 	<div class="header">
@@ -28,12 +29,10 @@
 				name="password_2">
 		</div>
 
-		<label>User Type</label><br> <select name="userType" class="btn">
-			<option value="">--Select--
+		<label>User Type</label><br> <select name="userType" class="btn" id="selectMenu">
+
 			
-			<option>
-			
-			<option value="approval taker">Approval Taker
+			<option value="approval taker" selected="selected">Approval Taker
 			
 			<option>
 			
@@ -52,5 +51,6 @@
 </div>
 		
 	</form>
+	
 </body>
 </html>

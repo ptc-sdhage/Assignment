@@ -24,11 +24,7 @@ if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: login.php');
 }
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['username']);
-    header("location: login.php");
-}
+
 ?><h2 style= color:green;><span class="blink"> Os approval is Rejected </span></h2>
 <?php 
 include('approverHelper.php');
@@ -86,7 +82,7 @@ if ($conn->query($sql) === TRUE) {
     $sql = "DELETE FROM approver WHERE At_id ='$at_id' and Response IS NULL";
     
     if ($conn->query($sql) === TRUE) {
-        echo "Record deleted successfully with at_id = . $at_id";
+        //echo "Record deleted successfully with at_id = . $at_id";
     } else {
         echo "Error deleting record: " . $conn->error;
     }
