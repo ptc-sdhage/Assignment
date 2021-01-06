@@ -140,7 +140,7 @@ if (isset($_POST['take_approval'])) {
         }
 
         $subject = "Request for OS link approval";
-        $body = "Approval Request pending for Os link : $link";
+        $body = "Approval Request pending for Os link : $link" ;
        
             if (mail($str_arr[0], $subject, $body)) {
                 // echo "Email successfully sent to $email...";

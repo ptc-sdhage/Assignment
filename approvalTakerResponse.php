@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 <head>
 <title>
 
-Accepted
+OS library approval system
 </title>
 
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -45,6 +45,16 @@ form, .content {
 </br>
 
 <?php 
+
+
+
+
+
+
+
+
+
+
 if (isset($_POST['back'])) {
        header('location: approvalTaker.php');
 }

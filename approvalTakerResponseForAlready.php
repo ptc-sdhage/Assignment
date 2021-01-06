@@ -19,7 +19,7 @@ form, .content {
   margin-top: 120px;
   background: #FFF5EE;
   width: 90%;
-
+border-radius: 10px 10px 10px 10px;
  border: 4px solid #B0C4DE;
   background: white;
 }
@@ -31,7 +31,7 @@ padding:20px;
 <body>
    <form method="post">
 <?php 
-include('server.php');
+
 $conn = mysqli_connect('localhost', 'root', '', 'assignmentdb');
     $takerResponse=$_GET['takerResponse'];
     $at_id=$_GET['at_id'];
@@ -48,7 +48,7 @@ $conn = mysqli_connect('localhost', 'root', '', 'assignmentdb');
             if (empty($response)) {
                 ?>
             </br>
-             <h3 style= color:green; > *Your request for open-source library is pending for approval with </h2><br><h3 style= color:blue><div class="email-position">  <?php echo $row['ApproverEmail']?></div></h3>
+             <h3 style= color:green; > *Your request for open-source library is pending for approval with </h2><h3 style= color:blue><div class="email-position">  <?php echo $row['ApproverEmail']?></div></h3>
         <?php break;}
         else {?>
             </br>

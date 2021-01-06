@@ -12,25 +12,9 @@ if (!isset($_SESSION['username'])) {
 <head>
 <meta charset="ISO-8859-1">
 <title>Approver</title>
-<script
-	src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script
-	src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-
 <link rel="stylesheet" type="text/css" href="style.css">
-
 <style>
-.reject{
-  padding: 10px;
-  font-size: 15px;
-  color: white;
-  background: #FF0000;
-  border: none;
-  border-radius: 5px;
-  display:inline-block;
-  width: 200px;
-}
+
 .div1 {
   width: 80%;
   height: 100px;
@@ -38,7 +22,7 @@ if (!isset($_SESSION['username'])) {
 }
 .btnlogout {
   padding: 10px;
-  width: 200px;
+  
   font-size: 15px;
   color: white;
   background: #FF0000;
@@ -46,16 +30,15 @@ if (!isset($_SESSION['username'])) {
   border-radius: 5px;
   position: fixed;
   top: 5px;
-  left: 1350px;
+  left: 1400px;
 /*position:relative; right:-1300px; top:50px;*/
 }
 .inner
-{  
-   margin-right:-5px;
+{
     display: inline-block;
 }
 .input-group {
-  margin: -10px -10px 10px 0px;
+  margin: -10px 0px 10px 0px;
 }
 .input-group input {
   height: 30px;
@@ -80,7 +63,6 @@ if (!isset($_SESSION['username'])) {
 
 </head>
 <body>
-
 <div class="input-group">
 			<button type="button" class="btnlogout" name="logout" ><a href="logout.php">Logout</a></button>
 		</div>
@@ -88,19 +70,11 @@ if (!isset($_SESSION['username'])) {
   	<h2>Approval Notification </h2>
   </div>
 </div>
+	<form method="post">
 
+<p id="link"></p>
 
-<h3> <table id="example" class="display" style="width:100%">
-        <thead>
-        <tr>
-        <th>Request No</th>
-        <th>Requestor Name</th>
-        <th>Request time</th>
-        <th>Open source library link</th>
-        <th>Your response</th>
-
-        </tr>
-        </thead>  <tbody><?php 
+<h3> <?php 
 
 $at_id ='';
 $email ='';
@@ -142,7 +116,7 @@ if ($result && $result ->num_rows > 0) {
     }
     $response_index=0;
     $count=1;?>
-    <h2 style= color:Black;></br>The following OS links needs to be approved.</br></h2></br>
+    <h2 style= color:Black;>The following OS links needs to be approved.</br></h2></br>
     <?php foreach ($at_id_array as $at_id_value) {
       
         $sql = "SELECT OsLink, ApprovalTakerName,Date FROM approvaltaker where At_id =$at_id_value ";
@@ -160,21 +134,10 @@ if ($result && $result ->num_rows > 0) {
         }
 
         if(empty($response_array[$response_index])){
-            
-            
-            echo "<tr><td>".$count. "</td>
-                <td>".$ApprovalTakerName. "</td>
-                <td>". $Date."</td>
-               <td><h4 style= color:blue;><a href= $OsLink > ".$OsLink. "</td>
-<td><div class=\"inner\">
- <div class=\"input-group\"><button id=\"approve\" class=\"btn\" name=\"approve\"><a href=\"accept.php?oslink=$OsLink&approvaltakername=$ApprovalTakerName\">Approve</a></button></div>
-    </div></td>
-           <td> <div class=\"inner\">
- <div class=\"input-group\"><button style= \"position: relative; left: -210px;\" id=\"Reject\" class=\"reject\" name=\"reject\"><a href=\"reject.php?oslink=$OsLink&approvaltakername=$ApprovalTakerName\">Reject</a></button></div>
-    </div></td></tr>";
- 
-            $count=$count+1;    
-           /* ?><h4 style= color:black;><?php  echo $count . ")"?> &nbsp; Requestor Name:  <?php echo $ApprovalTakerName?></br>&nbsp; &nbsp; &nbsp;&nbsp;Request time:  <?php echo $Date?></br><div class="div1"> &nbsp;&nbsp;&nbsp;&nbsp;<h4 style= color:green;> Approve or reject below link  </h4><?php
+            array_push($name_array, $ApprovalTakerName);
+            array_push($date_array, $Date);
+            array_push($link_array, $OsLink);
+            ?><h4 style= color:black;><?php  echo $count . ")"?> &nbsp; Requestor Name:  <?php echo $ApprovalTakerName?></br>&nbsp; &nbsp; &nbsp;&nbsp;Request time:  <?php echo $Date?></br><div class="div1"> &nbsp;&nbsp;&nbsp;&nbsp;<h4 style= color:green;> Approve or reject below link  </h4><?php
     echo "<h4 style= color:blue;><a href= $OsLink > $OsLink </a></div>";
     ?>
  <div class="inner">
@@ -189,22 +152,17 @@ if ($result && $result ->num_rows > 0) {
     </div>
     
    <?php  $count=$count+1;    
-    */}
+    }
     else {
-echo "<tr>      <td>".$count. "</td>
-                <td>".$ApprovalTakerName. "</td>
-                <td>". $Date."</td>
-                <td><h4 style= color:blue;><a href= $OsLink > ".$OsLink. "</td>
-<td> You have already responded for this link </td></tr>";
+        ?><h4 style= color:black;><?php echo $count . ")"?>&nbsp; Requestor Name:  <?php echo $ApprovalTakerName?></br>&nbsp; &nbsp;&nbsp; Request time:  <?php echo $Date?></br> &nbsp;&nbsp;&nbsp;&nbsp;<h4 style= color:green;> You have already responded to below link  </h4><?php echo "<h4 style= color:blue;>  <a href= $OsLink >$OsLink</a>"?> </span></h4></div></br>
+  <?php 
 $count=$count+1;    
     }
   $response_index=$response_index+1;
   
-  
+    
 }
-echo "</thread>";
-echo "</table>";
-
+    
   
 }else {
     
@@ -213,12 +171,6 @@ echo "</table>";
 ?></h3>
   
 </form>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-
-</script>
 </body>
 </html>
     
