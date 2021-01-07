@@ -28,7 +28,7 @@ form, .content {
 </body>
 <form method="post">
 <?php include('errors.php'); ?>
-<h3 style= color:green; align="center"> Your OS library approval request is pending for approval. Please wait for confirmation. </br></br>It generally takes upto 24 Hours. </h3>
+<h3 style= color:green; align="center"> Your OS library approval request is pending for approval. Please wait for confirmation.You will get the notificationon the mail </br></br>It generally takes upto 24 Hours. </h3>
 	<div class="buttonposition">
 	</br>
 	<div class="input-group">

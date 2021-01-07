@@ -90,17 +90,7 @@ if (!isset($_SESSION['username'])) {
 </div>
 
 
-<h3> <table id="example" class="display" style="width:100%">
-        <thead>
-        <tr>
-        <th>Request No</th>
-        <th>Requestor Name</th>
-        <th>Request time</th>
-        <th>Open source library link</th>
-        <th>Your response</th>
-
-        </tr>
-        </thead>  <tbody><?php 
+<?php 
 
 $at_id ='';
 $email ='';
@@ -123,15 +113,33 @@ if ($result && $result ->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         
-        $email = $row['email'];
+        $email = $row["email"];
+
     }
 } else {
     echo "0 results";
 }
-$sql = "SELECT At_id, Response FROM approver where ApproverEmail ='$email'";
+
+
+$sql = "SELECT At_id, Response FROM approver where ApproverEmail='$email'";
 $result = $conn->query($sql);
 
 if ($result && $result ->num_rows > 0) {
+  
+?>    
+    <h3> <table id="example" class="display" style="width:100%">
+        <thead>
+        <tr>
+        <th>Request No</th>
+        <th>Requestor Name</th>
+        <th>Request time</th>
+        <th>Open source library link</th>
+        <th>Your response</th>
+
+        </tr>
+        </thead>  <tbody><?php 
+    
+    
     // output data of each row
     while($row = $result->fetch_array()) {
        // echo $row['At_id'];
@@ -153,6 +161,7 @@ if ($result && $result ->num_rows > 0) {
             while($row = $result->fetch_array()) {
                 $OsLink = $row['OsLink'];
                 $ApprovalTakerName = $row['ApprovalTakerName'];
+            
                 $Date = $row['Date'];
             }
         } else {
@@ -170,26 +179,11 @@ if ($result && $result ->num_rows > 0) {
  <div class=\"input-group\"><button id=\"approve\" class=\"btn\" name=\"approve\"><a href=\"accept.php?oslink=$OsLink&approvaltakername=$ApprovalTakerName\">Approve</a></button></div>
     </div></td>
            <td> <div class=\"inner\">
- <div class=\"input-group\"><button style= \"position: relative; left: -210px;\" id=\"Reject\" class=\"reject\" name=\"reject\"><a href=\"reject.php?oslink=$OsLink&approvaltakername=$ApprovalTakerName\">Reject</a></button></div>
+ <div class=\"input-group\"><button style= \"position: relative; left: 0px;\" id=\"Reject\" class=\"reject\" name=\"reject\"><a href=\"reject.php?oslink=$OsLink&approvaltakername=$ApprovalTakerName\">Reject</a></button></div>
     </div></td></tr>";
  
             $count=$count+1;    
-           /* ?><h4 style= color:black;><?php  echo $count . ")"?> &nbsp; Requestor Name:  <?php echo $ApprovalTakerName?></br>&nbsp; &nbsp; &nbsp;&nbsp;Request time:  <?php echo $Date?></br><div class="div1"> &nbsp;&nbsp;&nbsp;&nbsp;<h4 style= color:green;> Approve or reject below link  </h4><?php
-    echo "<h4 style= color:blue;><a href= $OsLink > $OsLink </a></div>";
-    ?>
- <div class="inner">
- <div class="input-group">
-    <button id="approve" class="btn"   name="approve"><a href="accept.php">Approve</a></button>
-    </div>
-    </div>
-     <div class="inner">
-    <div class="input-group">
-    <button id="Reject" class="reject" name="reject"><a href="reject.php">Reject</a></button>
-    </div>
-    </div>
-    
-   <?php  $count=$count+1;    
-    */}
+}
     else {
 echo "<tr>      <td>".$count. "</td>
                 <td>".$ApprovalTakerName. "</td>
@@ -208,7 +202,7 @@ echo "</table>";
   
 }else {
     
-    ?><h2 style= color:green;>No pending requests</h2><?php 
+    ?><div class="blink"><h1 style= color:green;margin-left:620px;></br></br>No pending requests</h1></div><?php 
 }
 ?></h3>
   
@@ -222,7 +216,7 @@ $(document).ready(function() {
 </body>
 </html>
     
-} 
+
 
 
 

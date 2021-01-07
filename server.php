@@ -26,8 +26,8 @@ if (isset($_POST['reg_user'])) {
     if (empty($username)) {
         array_push($errors, "Username is required");
     }
-   
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$username)) {
+
+    if (! preg_match("/^[a-zA-Z-' ]*$/", $username)) {
         array_push($errors, "Only letters and white space allowed in username");
     }
     if (empty($email)) {
@@ -89,7 +89,7 @@ if (isset($_POST['login_user'])) {
         $results = mysqli_query($db, $query);
         if (mysqli_num_rows($results) == 1) {
             $_SESSION['username'] = $username;
-            
+
             header('location: index.php');
         } else {
             array_push($errors, "Wrong username/password combination");
@@ -105,12 +105,14 @@ if (isset($_POST['take_approval'])) {
     $arrlength = count($str_arr);
     $x = 0;
     while ($x < $arrlength) {
-        if (! filter_var($str_arr[$x], FILTER_VALIDATE_EMAIL)) {
+        $email = filter_var($str_arr[$x], FILTER_SANITIZE_EMAIL);
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo $email;
             array_push($errors, "Invalid email format");
         }
         $x ++;
     }
-    $x=0;
+    $x = 0;
     if (empty($link)) {
         array_push($errors, "OS link is required");
     }
@@ -123,53 +125,55 @@ if (isset($_POST['take_approval'])) {
 
     if ($result && $result->num_rows > 0 && (count($errors) == 0)) {
         while ($row = $result->fetch_assoc()) {
-            
+
             $at_id = $row['At_id'];
             header("Location:approvalTakerResponseForAlready.php?takerResponse=$link&at_id=$at_id");
         }
-        
-    } else if(count($errors) == 0) {
+    } else if (count($errors) == 0) {
 
         $query = "INSERT INTO approvaltaker (ApprovalTakerName, OsLink, ApproverEmailIds, Date) VALUES ('{$_SESSION['username']}', '$link', '$address', CURRENT_TIMESTAMP)";
         mysqli_query($db, $query);
 
         $at_id = '';
-        $date = '';
+        $date = date("Y-m-d") . " " . date("h:i:sa");
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
+        $systemLink = "http://localhost/registration/login.php";
         $subject = "Request for OS link approval";
-        $body = "Approval Request pending for Os link : $link" ;
-       
-            if (mail($str_arr[0], $subject, $body)) {
-                // echo "Email successfully sent to $email...";
-            } else {
-                array_push($errors, "Email sending failed...");
-            }
-        
 
-            while ($x < $arrlength) {
+        $body = "Request pending for Os link approval for the link : $link \nRequestor name: {$_SESSION['username']} \nRequest time: $date \nLogin to OS link approval system for more details and to approve or reject the request: $systemLink \n\n Thanks,\nAdmin(OS library management system)";
 
-                $sql = "SELECT At_id ,Date FROM approvaltaker where ApprovalTakerName = '{$_SESSION['username']}'";
-                $result = $conn->query($sql);
+        if (mail($str_arr[0], $subject, $body)) {
+            // echo "Email successfully sent to $email...";
+        } else {
+            array_push($errors, "Email sending failed...");
+        }
 
-                if ($result && $result->num_rows > 0) {
-                    // output data of each row
-                    while ($row = $result->fetch_assoc()) {
+        while ($x < $arrlength) {
 
-                        $at_id = $row['At_id'];
-                        $date = $row['Date'];
-                    }
-                } else {
-                    echo "0 results";
+            $sql = "SELECT At_id ,Date FROM approvaltaker where ApprovalTakerName = '{$_SESSION['username']}'";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+
+                    $at_id = $row['At_id'];
+                    $date = $row['Date'];
                 }
-
-                $query = "INSERT INTO approver (ApproverEmail, Response, Date, At_id) VALUES ('$str_arr[$x]', NULL,'$date','$at_id')";
-                mysqli_query($conn, $query);
-                $x ++;
-               
+            } else {
+                echo "0 results";
             }
+
+            echo $str_arr[$x];
+            echo strlen($str_arr[$x]);
+            echo "in server";
+            $query = "INSERT INTO approver (ApproverEmail, Response, Date, At_id) VALUES ('$str_arr[$x]', NULL,'$date','$at_id')";
+            mysqli_query($conn, $query);
+            $x ++;
+        }
         ?>
 
 
