@@ -10,7 +10,6 @@
 	<div class="header">
 		<h2>Register</h2>
 	</div>
-
 	<form method="post" action="register.php">
   	<?php include('errors.php'); ?>
   	<div class="input-group">
@@ -28,29 +27,23 @@
 			<label>Confirm password</label> <input type="password"
 				name="password_2">
 		</div>
-
-		<label>User Type</label><br> <select name="userType" class="btn" id="selectMenu">
-
-			
-			<option value="approval taker" selected="selected">Approval Taker
-			
-			<option>
-			
-			<option value="approver">Approver
-			
-			<option>
-		
+		<label>User Type</label><br> <select name="userType" class="btn"
+			id="selectMenu">
+			<option value="approval taker" selected="selected">Approval Taker		
+			<option>		
+			<option value="approver">Approver	
+			<option>	
 		</select>
 		<div class="input-group">
 			<button type="submit" class="btn" name="reg_user">Register</button>
 		</div>
-		
+
 		<div style="overflow: hidden;">
-    <p style="float: left;">Already a member?</p>
-    <p style="float: Left;color: blue;"><a href="login.php">Sign in</p>
-</div>
-		
+			<p style="float: left;">Already a member?</p>
+			<p style="float: Left; color: blue;">
+				<a href="login.php">Sign in			
+			</p>
+		</div>
 	</form>
-	
 </body>
 </html>

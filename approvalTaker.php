@@ -1,5 +1,4 @@
 <?php
-
 include ('server.php');
 if (! isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
@@ -22,13 +21,14 @@ if (isset($_GET['diff'])) {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css">
 
+
 <body>
 	<div class="header">
 		<h2>OS Library approval System</h2>
 	</div>
 	<form method="post">
 
-<?php include('errors.php'); ?>
+
  <div class="library">
 
 

@@ -21,8 +21,7 @@ if (isset($_POST['reg_user'])) {
     $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
     $userType = mysqli_real_escape_string($db, $_POST['userType']);
 
-    // form validation: ensure that the form is correctly filled ...
-    // by adding (array_push()) corresponding error unto $errors array
+ //push errors into errors array and display them at last
     if (empty($username)) {
         array_push($errors, "Username is required");
     }
@@ -104,8 +103,8 @@ if (isset($_POST['take_approval'])) {
     $str_arr = preg_split("/\,/", $address);
     $arrlength = count($str_arr);
     $x = 0;
-    while ($x < $arrlength) {
-        $email = filter_var($str_arr[$x], FILTER_SANITIZE_EMAIL);
+    while ($x < $arrlength) {   //check validation for all the email addresses
+        $email = filter_var($str_arr[$x], FILTER_SANITIZE_EMAIL);   // FILTER_SANITIZE_EMAIL filter removes all illegal characters from an email address.
         if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo $email;
             array_push($errors, "Invalid email format");
@@ -123,54 +122,42 @@ if (isset($_POST['take_approval'])) {
     $query = "SELECT * FROM approvaltaker WHERE OsLink='$link' AND ApprovalTakerName='{$_SESSION['username']}'";
     $result = $conn->query($query);
 
-    if ($result && $result->num_rows > 0 && (count($errors) == 0)) {
+    if ($result && $result->num_rows > 0 && (count($errors) == 0)) {          //if alreaddy applied for the same link
         while ($row = $result->fetch_assoc()) {
-
             $at_id = $row['At_id'];
             header("Location:approvalTakerResponseForAlready.php?takerResponse=$link&at_id=$at_id");
         }
     } else if (count($errors) == 0) {
-
         $query = "INSERT INTO approvaltaker (ApprovalTakerName, OsLink, ApproverEmailIds, Date) VALUES ('{$_SESSION['username']}', '$link', '$address', CURRENT_TIMESTAMP)";
         mysqli_query($db, $query);
-
         $at_id = '';
         $date = date("Y-m-d") . " " . date("h:i:sa");
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-
         $systemLink = "http://localhost/registration/login.php";
         $subject = "Request for OS link approval";
-
         $body = "Request pending for Os link approval for the link : $link \nRequestor name: {$_SESSION['username']} \nRequest time: $date \nLogin to OS link approval system for more details and to approve or reject the request: $systemLink \n\n Thanks,\nAdmin(OS library management system)";
 
-        if (mail($str_arr[0], $subject, $body)) {
+        if (mail($str_arr[0], $subject, $body)) {       //send the mail to first approver email id provided by approvaltaker
             // echo "Email successfully sent to $email...";
         } else {
             array_push($errors, "Email sending failed...");
         }
 
         while ($x < $arrlength) {
-
             $sql = "SELECT At_id ,Date FROM approvaltaker where ApprovalTakerName = '{$_SESSION['username']}'";
             $result = $conn->query($sql);
-
             if ($result && $result->num_rows > 0) {
-                // output data of each row
                 while ($row = $result->fetch_assoc()) {
-
                     $at_id = $row['At_id'];
                     $date = $row['Date'];
                 }
             } else {
                 echo "0 results";
             }
-
-            echo $str_arr[$x];
-            echo strlen($str_arr[$x]);
-            echo "in server";
-            $query = "INSERT INTO approver (ApproverEmail, Response, Date, At_id) VALUES ('$str_arr[$x]', NULL,'$date','$at_id')";
+            //add entry in approver with response as NULL, We will update respnse when approver gives it 
+            $query = "INSERT INTO approver (ApproverEmail, Response, Date, At_id) VALUES ('$str_arr[$x]', NULL,'$date','$at_id')";   
             mysqli_query($conn, $query);
             $x ++;
         }
